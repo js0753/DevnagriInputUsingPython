@@ -1,2 +1,2 @@
 # DevnagriInputUsingPython
-Uses Keyboard Interface by boppreh : https://github.com/boppreh/keyboard
+Uses Keyboard by boppreh : https://github.com/boppreh/keyboard
