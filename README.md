@@ -4,7 +4,7 @@
 How to use:</br>
 1)Devnagri Interface:<br>
 After running devnagri_keyboard_input.py , press esc
-in notepad or wherever want to enter text,Enter string a from map.png and press space to get devnagari character. eg: a+space bar gives अ
+in notepad or wherever you want to enter text,enter string from map.png and press space to get devnagari character. eg: a+space bar gives अ
 
 2)Dip Keyboard:<br>
 ->Run dipkb.py<br>
