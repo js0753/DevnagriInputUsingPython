@@ -9,21 +9,38 @@
 
 
 import time
-
+import threading
+import multiprocessing 
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 try:
     from PyQt5 import QtCore, QtGui, QtWidgets
     import keyboard
-    from pynput.mouse import Button,Controller
+    from pynput.mouse import Button,Controller,Listener
+    
 except ImportError:
     install('pynput')
     install('pyqt5')
     install('keyboard')
-    from pynput.mouse import Button,Controller
+    from pynput.mouse import Button,Controller,Listener
     from PyQt5 import QtCore, QtGui, QtWidgets
     import keyboard
-    
+
+import logging
+
+#logging.basicConfig(filename="mouse_log.txt",level=logging.DEBUG, format="%(asctime)s: %(message)s")
+#def mouse_clicklogger():
+logging.basicConfig(filename="mouse_log.txt",level=logging.DEBUG, format="%(asctime)s: %(message)s")
+
+def mouse_click(x,y,button,pressed):
+    if pressed:
+        print("({0},{1})".format(x,y))
+        logging.info("({0},{1})".format(x,y))
+
+def click_logger():
+    with Listener(on_click=mouse_click) as listener:
+            listener.join()
+        
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint )
@@ -95,7 +112,7 @@ class Ui_MainWindow(object):
 
 
     def on_click(self,pushButton):
-        time.sleep(0.1)
+        #time.sleep(0.1)
         print("Clicked ",pushButton.text())
         X=""
         Y=""
@@ -124,8 +141,8 @@ class Ui_MainWindow(object):
         mouse.release(Button.left)
         
         keyboard.write(pushButton.text())
-        mouse.position=(int(X)+5,int(Y))
-
+        mouse.position=(int(X)+10,int(Y))
+        keyboard.press_and_release('space')
         mouse.click(Button.left)
         mouse.release(Button.left)
         i=0   
@@ -140,14 +157,18 @@ class Ui_MainWindow(object):
         while(new_line[i]!=')'):
             Y1=Y1+new_line[i]
             i=i+1
-        mouse.position=(int(X1),int(Y1))   
+        mouse.position=(int(X1),int(Y1))
+        
 
 
 if __name__ == "__main__":
     import sys
+    t1 = threading.Thread(target=click_logger)
+    t1.start()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+       
