@@ -124,10 +124,10 @@ class Ui_MainWindow(object):
         mouse.release(Button.left)
         
         keyboard.write(pushButton.text())
-        #mouse.position=(int(X)+1,int(Y))
+        mouse.position=(int(X)+5,int(Y))
 
-        #mouse.click(Button.left)
-        #mouse.release(Button.left)
+        mouse.click(Button.left)
+        mouse.release(Button.left)
         i=0   
         while(new_line[i]!='('):
             i=i+1
