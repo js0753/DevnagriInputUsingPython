@@ -1,30 +1,36 @@
 # -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'C:\Users\jaina\Desktop\DevnagriInterface\dipkb.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
-
 import time
+import sys
 import threading
-import multiprocessing 
+import subprocess
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 try:
-    from PyQt5 import QtCore, QtGui, QtWidgets
-    import keyboard
-    from pynput.mouse import Button,Controller,Listener
     
+    from PyQt5.QtCore import Qt
+    from PyQt5.QtWidgets import QMainWindow,QApplication,QGridLayout,QLineEdit,QPushButton,QVBoxLayout,QWidget
+except ImportError:
+    install('pyqt5')
+    from PyQt5.QtCore import Qt
+    from PyQt5.QtWidgets import QMainWindow,QApplication,QGridLayout,QLineEdit,QPushButton,QVBoxLayout,QWidget
+try:    
+    import pyautogui
+except ImportError:
+    install('pyautogui')
+    import pyautogui
+try:    
+    import keyboard
+except ImportError:
+    install('keyboard')
+
+try:
+    from pynput.mouse import Listener
 except ImportError:
     install('pynput')
-    install('pyqt5')
-    install('keyboard')
-    from pynput.mouse import Button,Controller,Listener
-    from PyQt5 import QtCore, QtGui, QtWidgets
-    import keyboard
+    from pynput.mouse import Listener
+    
+ 
+    
 
 import logging
 
@@ -39,89 +45,140 @@ def mouse_click(x,y,button,pressed):
 
 def click_logger():
     with Listener(on_click=mouse_click) as listener:
-            listener.join()
-        
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint )
-        MainWindow.setObjectName("MainWindow")
-        #MainWindow.setFocusPolicy(QtCore.Qt.NoFocus)
-        
-        MainWindow.resize(460, 360)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(10, 170, 101, 41))
-        self.pushButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(180, 170, 101, 41))
-        self.pushButton_2.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_2.setObjectName("pushButton_2") 
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(10, 230, 101, 41))
-        self.pushButton_3.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_4.setGeometry(QtCore.QRect(180, 230, 101, 41))
-        self.pushButton_4.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(350, 170, 101, 41))
-        self.pushButton_5.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_6.setGeometry(QtCore.QRect(350, 230, 101, 41))
-        self.pushButton_6.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_6.setObjectName("pushButton_6")
-        #self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        #self.lineEdit.setGeometry(QtCore.QRect(180, 40, 311, 61))
-        #self.lineEdit.setFocusPolicy(QtCore.Qt.NoFocus)
-        #self.lineEdit.setObjectName("lineEdit")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-        arr=[self.pushButton,self.pushButton_2,self.pushButton_3,self.pushButton_4,self.pushButton_5,self.pushButton_6]
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-                 
-        self.pushButton.clicked.connect(lambda: self.on_click(self.pushButton))
-        self.pushButton_2.clicked.connect(lambda: self.on_click(self.pushButton_2))
-        self.pushButton_3.clicked.connect(lambda: self.on_click(self.pushButton_3))
-        self.pushButton_4.clicked.connect(lambda: self.on_click(self.pushButton_4))
-        self.pushButton_5.clicked.connect(lambda: self.on_click(self.pushButton_5))
-        self.pushButton_6.clicked.connect(lambda: self.on_click(self.pushButton_6))
-        
-        #for button in arr:
-            #button.clicked.connect(lambda: self.on_click(button))
+           listener.join()
+    
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "अ"))
-        self.pushButton_2.setText(_translate("MainWindow", "आ"))
-        self.pushButton_3.setText(_translate("MainWindow", "ई"))
-        self.pushButton_4.setText(_translate("MainWindow", "उ"))
-        self.pushButton_5.setText(_translate("MainWindow", "इ"))
-        self.pushButton_6.setText(_translate("MainWindow", "ऊ"))
+from functools import partial
 
 
-    def on_click(self,pushButton):
-        #time.sleep(0.1)
-        print("Clicked ",pushButton.text())
+
+
+
+class DipUi(QMainWindow):
+    
+
+    def __init__(self):
+        
+        super().__init__()
+        self.setWindowFlags(Qt.WindowStaysOnTopHint )
+        # Set some main window's properties
+        self.setWindowTitle("Dip Keyboard")
+        self.setFixedSize(350, 450)
+        # Set the central widget and the general layout
+        self.generalLayout = QVBoxLayout()
+        self._centralWidget = QWidget(self)
+        self.setCentralWidget(self._centralWidget)
+        self._centralWidget.setLayout(self.generalLayout)
+        # Create the display and the buttons
+        #self._createDisplay()
+        self._createButtons()
+
+    #def _createDisplay(self):
+        
+        # Create the display widget
+        #self.display = QLineEdit()
+        # Set some display's properties
+        #self.display.setFixedHeight(35)
+        #self.display.setAlignment(Qt.AlignRight)
+        #self.display.setReadOnly(True)
+        # Add the display to the general layout
+        #self.generalLayout.addWidget(self.display)
+
+    def _createButtons(self):
+        
+        self.buttons1 = {}
+        buttonsLayout = QGridLayout()
+       
+        buttons1 = [
+            "अ","आ","इ","ई","उ","ऊ","ए","ऎ","ओ","औ",
+            
+            "क","ख","ग","घ","च","छ","ज","झ","ञ","ट","ठ","ण","ळ","त","थ","द","ध","न","प","फ","ब","भ","म","य","र","ल","व","श","ष","स","ह",
+
+            "ँ","ं","ः","ा","ि","ी","ु","ू","े","ै","ो","ौ","्","<-","space"
+        ]
+        #print(buttons1[0])
+        self.buttons={}
+        i=0
+        j=0
+        for button in buttons1:
+            #print(button,i,j)
+            if(button=="क" or button=="ँ" or button=="<-"):
+                i=i+1
+                j=0
+           
+            self.buttons[button] = (i,j)
+            if(j<6):
+                j=j+1
+            else:
+                j=0
+                i=i+1
+            
+            
+            
+            
+        # Create the buttons and add them to the grid layout
+        for btnText, pos in self.buttons.items():
+            self.buttons[btnText] = QPushButton(btnText)
+            self.buttons[btnText].setFixedSize(40, 40)
+            buttonsLayout.addWidget(self.buttons[btnText], pos[0], pos[1])
+        # Add buttonsLayout to the general layout
+        self.generalLayout.addLayout(buttonsLayout)
+"""
+    def setDisplayText(self, text):
+        
+        self.display.setText(text)
+        self.display.setFocus()
+
+    def displayText(self):
+        
+        return self.display.text()
+
+    def clearDisplay(self):
+       
+        self.setDisplayText("")
+
+    def backDisplay(self):
+        s=self.display.text()[:-1]
+        self.setDisplayText(s)
+"""   
+
+
+        
+
+class SetupConnection:
+    
+
+    def __init__(self, view):
+       
+        self._view = view
+        # Connect signals and slots
+        for btnText, btn in self._view.buttons.items():
+            #if btnText not in {"<-", "clear"}:
+            btn.clicked.connect(partial(self.button_press, btnText))
+        #self._view.buttons["clear"].clicked.connect(self._view.clearDisplay)
+        #self._view.buttons["<-"].clicked.connect(self._view.backDisplay)
+
+ 
+    def button_press(self, sub_exp):
+        """
+        if sub_exp not in {"<-", "clear"}:
+            expression = self._view.displayText() + sub_exp
+            self._view.setDisplayText(expression)
+        """
+       
+
+        print("Clicked ",sub_exp)
         X=""
         Y=""
         X1=""
         Y1=""
         with open('mouse_log.txt', 'r') as f:
+            
             lines = f.read().splitlines()
             last_line = lines[-2]
             new_line=lines[-1]
+            
+            
         i=0   
         while(last_line[i]!='('):
             i=i+1
@@ -135,16 +192,16 @@ class Ui_MainWindow(object):
             Y=Y+last_line[i]
             i=i+1    
         print(X,Y)    
-        mouse=Controller()
-        mouse.position=(int(X),int(Y))
-        mouse.click(Button.left)
-        mouse.release(Button.left)
-        
-        keyboard.write(pushButton.text())
-        mouse.position=(int(X)+10,int(Y))
-        keyboard.press_and_release('space')
-        mouse.click(Button.left)
-        mouse.release(Button.left)
+      
+        pyautogui.click(int(X),int(Y))
+        if sub_exp not in {"<-", "clear","space"}:
+            keyboard.write(sub_exp)
+        elif sub_exp=="<-":
+            keyboard.press_and_release('backspace')
+        elif sub_exp=="space":
+            keyboard.press_and_release('space')
+        pyautogui.click(int(X)+10,int(Y))
+   
         i=0   
         while(new_line[i]!='('):
             i=i+1
@@ -157,18 +214,31 @@ class Ui_MainWindow(object):
         while(new_line[i]!=')'):
             Y1=Y1+new_line[i]
             i=i+1
-        mouse.position=(int(X1),int(Y1))
+        pyautogui.moveTo(int(X1),int(Y1))
         
 
 
-if __name__ == "__main__":
-    import sys
+
+def main():
     t1 = threading.Thread(target=click_logger)
     t1.start()
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+    #Listener(on_click=mouse_click)
+    
+   
+        
+    app = QApplication(sys.argv)
+ 
+    view = DipUi()
+    view.show()
+ 
+    SetupConnection( view=view)
+    if(app.exec_()):
+        #pynput.mouse.Listner.stop()
+        
+        sys.exit()
        
+       
+
+
+if __name__ == "__main__" :
+    main()
