@@ -5,8 +5,9 @@ def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 try:
+    #from keyboardmaster
     import keyboard
-
+    
 except ImportError:
     
     install('keyboard')
@@ -61,7 +62,25 @@ keyboard.add_abbreviation('sh', '\u0936')
 keyboard.add_abbreviation('Sh', '\u0937')
 keyboard.add_abbreviation('s', '\u0938')
 keyboard.add_abbreviation('h', '\u0939')
-
+keyboard.add_abbreviation('@aa', '\u093E')
+keyboard.add_abbreviation('@e', '\u0947')
+keyboard.add_abbreviation('@i', '\u093F')
+keyboard.add_abbreviation('@ii', '\u0940')
+keyboard.add_abbreviation('@u', '\u0941')
+keyboard.add_abbreviation('@uu', '\u0942')
+keyboard.add_abbreviation('@r', '\u0943')
+keyboard.add_abbreviation('@rr', '\u0944')
+keyboard.add_abbreviation('@cd', '\u0945')
+keyboard.add_abbreviation('@ai', '\u0948')
+keyboard.add_abbreviation('@acd', '\u0949')
+keyboard.add_abbreviation('@o', '\u094B')
+keyboard.add_abbreviation('@au', '\u094C')
+keyboard.add_abbreviation('@hlf', '\u094D')
+keyboard.add_abbreviation('@ii', '\u0940')
+keyboard.add_abbreviation('@cnb', '\u0901')
+keyboard.add_abbreviation('@bd', '\u0902')
+keyboard.add_abbreviation('@aha', '\u0903')
+keyboard.add_abbreviation('@.', '\u0964')
 
 # Block forever, like `while True`.
 keyboard.wait()
